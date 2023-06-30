@@ -1,5 +1,5 @@
 {
-  "name": "phonebook",
+  "name": "phonebookBackend",
   "version": "1.0.0",
   "description": "This is the backend of phonebook",
   "main": "index.js",
