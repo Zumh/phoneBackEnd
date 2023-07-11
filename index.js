@@ -9,8 +9,9 @@ const morgan = require('morgan');
 // importing module by using this 
 const Person = require('./models/person');
 
+// 3.16: moved error handling of the application to a new error handler middleware.
 const errorHandler = (error, request, response, next) => {
-	console.error(error.message, "helloworo");
+	console.error(error.message + "helloworo");
 	if (error.name === "CastError") {
 		return response.status(400).send({ error: "malformatted id"});
 
