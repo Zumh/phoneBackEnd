@@ -36,6 +36,9 @@ const personSchema = new mongoose.Schema({
 		number: String,
 });
 
+
+
+
 // eliminate the id and version number for personschema
 personSchema.set('toJSON', {
 	transform: (document, returnedObject) => {
@@ -82,4 +85,4 @@ if (process.argv.length > 2) {
 
 */
 
-module.exports = mongoose.model('Person', personSchema);
+module.exports = mongoose.model('persons', personSchema);

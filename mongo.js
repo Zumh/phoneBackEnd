@@ -28,7 +28,7 @@ const personSchema = new mongoose.Schema({
 
 // create the person schema 
 // Person == persons from MongoDBAtlas 
-const Person = mongoose.model('Person', personSchema);
+const Person = mongoose.model('persons', personSchema);
 
 if (process.argv.length > 3) {
 
