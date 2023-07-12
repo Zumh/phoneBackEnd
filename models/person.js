@@ -32,12 +32,13 @@ mongoose.connect(url)
 
 // setting schema
 const personSchema = new mongoose.Schema({
-		name: String,
-		number: String,
+		name: {
+			type: String,
+			minLength: 3,
+			required: true
+		},
+		number: String
 });
-
-
-
 
 // eliminate the id and version number for personschema
 personSchema.set('toJSON', {

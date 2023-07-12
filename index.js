@@ -11,7 +11,7 @@ const Person = require('./models/person');
 
 // 3.16: moved error handling of the application to a new error handler middleware.
 const errorHandler = (error, request, response, next) => {
-	console.error(error.message + "helloworo");
+	console.error(error.message);
 	if (error.name === "CastError") {
 		return response.status(400).send({ error: "malformatted id"});
 
@@ -143,7 +143,7 @@ app.put("/api/persons/:id", (request, response, next) => {
 		number: body.number,  
 	} 
 
-	Person.findByIdAndUpdate(request.params.id, newPerson, { new: true })
+	Person.findByIdAndUpdate(request.params.id, newPerson,  { new: true, runValidators: true, context: "query" })
 	.then(updatePerson => {
 		response.json(updatePerson)
 	})
@@ -204,7 +204,7 @@ app.post('/api/people', (request, response) => {
 */
 
 // new entry: save input data from text inbox to database 
-app.post('/api/persons', (request, response) => {
+app.post('/api/persons', (request, response, next) => {
 	const body = request.body;
 	const person = new Person({
 			name: body.name,
