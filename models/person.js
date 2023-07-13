@@ -15,23 +15,28 @@ mongoose.connect(url)
   .catch((error) => {
     console.log('error connecting to MongoDB:', error.message)
   })
-// phone number validtor
-const phoneValidator = {
-  validator: (number) => {
-    const match = number.match(/^(\d{2,3})-(\d+)$/)
-    if (!match) {
-      phoneValidator.message = props => `${props.value} is not a valid phone number!`
-      return false
-    }
 
-    if (match[1].length + match[2].length < 8){
-      phoneValidator.message = props => `${props.value} does not meet the minimum length requirement!`
-      return false
-    }
-    return true
+
+// phone number validtor
+const phoneValidator = [
+  {
+    validator: (number) => {
+      return /^(\d{2,3})-(\d+)$/.test(number)
+    },
+    message: props => `${props.value} is not a valid phone number format!`
   },
-  message: props => `${props.value} is not a valid phone number!`
-}
+  {
+    validator: (number) => {
+      const match = number.match(/^(\d{2,3})-(\d+)$/)
+
+      if ((match[1].length + match[2].length) < 8) {
+        return false
+      }
+    },
+    message: props => `${props.value} does not meet the minimum length requirement!`
+  }
+]
+
 
 // setting schema
 const personSchema = new mongoose.Schema({
