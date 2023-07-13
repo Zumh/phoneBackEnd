@@ -29,6 +29,16 @@ mongoose.connect(url)
 .catch((error) => {
 	console.log('error connecting to MongoDB:', error.message);
 });
+// phone number validtor 
+const phoneValidator = {
+	validator: (number) => {
+		const match = number.match(/^(\d{2,3})-(\d+)$/);
+		if (!match) return false;
+		console.log(match[1]);
+		return match[1].length + match[2].length >= 8;
+	},
+	message: props => `${props.value} is not a valid phone number!`
+}
 
 // setting schema
 const personSchema = new mongoose.Schema({
@@ -37,7 +47,12 @@ const personSchema = new mongoose.Schema({
 			minLength: 3,
 			required: true
 		},
-		number: String
+		number: {
+			type: String,
+			validate: phoneValidator,
+			required: true,
+		},
+		
 });
 
 // eliminate the id and version number for personschema
