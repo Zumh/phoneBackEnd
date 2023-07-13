@@ -19,9 +19,16 @@ mongoose.connect(url)
 const phoneValidator = {
   validator: (number) => {
     const match = number.match(/^(\d{2,3})-(\d+)$/)
-    if (!match) return false
-    console.log(match[1])
-    return match[1].length + match[2].length >= 8
+    if (!match) {
+      phoneValidator.message = props => `${props.value} is not a valid phone number!`
+      return false
+    }
+
+    if (match[1].length + match[2].length < 8){
+      phoneValidator.message = props => `${props.value} does not meet the minimum length requirement!`
+      return false
+    }
+    return true
   },
   message: props => `${props.value} is not a valid phone number!`
 }
